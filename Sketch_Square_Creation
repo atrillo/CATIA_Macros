@@ -1,0 +1,64 @@
+Option Explicit
+
+' CATIA Script created by Antonio Trillo Díaz. All copyrights belongs to their respective owners.
+' This script creates within a Part document a sketch containing N squares (user defined).
+' Created on 17/09/2014
+ 
+Sub CATMain()
+ 
+' New CATPart application --------------------------------------------
+
+Dim Component As Part
+Dim Doc As Document
+'Set Doc = CATIA.Documents.Add("Part") /Comentar si no hay Part abierto
+Set Doc = CATIA.ActiveDocument
+Set Component = Doc.Part
+
+' List Object Sketches Generation -----------------------------------
+
+Dim Sketch As Sketches
+Set Sketch = Component.MainBody.Sketches
+
+' Reference Level Generation -------------------------------------------
+
+Dim ElementsOrigin, Level
+Set ElementsOrigin = Component.OriginElements
+Set Level = ElementsOrigin.PlaneYZ
+
+' Object Sketch Generation -------------------------------------------
+
+Dim Sktch As Sketch
+Set Sktch = Sketch.Add(Level)
+
+' 2D Tool Box Generation and Sktech Definition ---------------------
+
+Dim Wzk As Factory2D
+Set Wzk = Sktch.OpenEdition
+
+' Geometry Generation -----------------------------------------------
+
+Dim Linea As Line2D
+
+Dim Value As Double
+Value = InputBox("Enter the width:", "Part Creation", 100)
+
+Dim Number As Integer
+Number = InputBox("Number of squares:", "Part Creation", 1)
+
+Dim i As Integer
+
+For i = 1 To Number
+    Value = i * Value
+    Set Linea = Wzk.CreateLine(-Value / 2, Value / 2, Value / 2, Value / 2)
+    Set Linea = Wzk.CreateLine(Value / 2, Value / 2, Value / 2, -Value / 2)
+    Set Linea = Wzk.CreateLine(Value / 2, -Value / 2, -Value / 2, -Value / 2)
+    Set Linea = Wzk.CreateLine(-Value / 2, -Value / 2, -Value / 2, Value / 2)
+
+Next
+
+' Sketch Closing and Component Update -----------------------
+
+Sktch.CloseEdition
+Component.Update
+
+End Sub
