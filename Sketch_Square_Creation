@@ -10,7 +10,7 @@ Sub CATMain()
 
 Dim Component As Part
 Dim Doc As Document
-'Set Doc = CATIA.Documents.Add("Part") /Comentar si no hay Part abierto
+'Set Doc = CATIA.Documents.Add("Part") /Comment if there is no Part open
 Set Doc = CATIA.ActiveDocument
 Set Component = Doc.Part
 
