@@ -1,0 +1,112 @@
+ub CATMain()
+
+' CATIA Script created by Antonio Trillo Díaz. All copyrights belongs to their respective owners.
+' This script is used in order to provide part/assembly a nice presentation.
+' Created on 17/09/2014
+
+Set ProductDocument1 = CATIA.ActiveDocument
+Set Product1 = ProductDocument1.Product
+
+Dim ProductDoc1 As Document
+Set ProductDoc1 = CATIA.ActiveDocument
+ 
+Dim Selection1_As_Selection
+Set selection1 = ProductDoc1.Selection
+
+Product1.ApplyWorkMode DESIGN_MODE
+
+selection1.Search "CATAsmSearch.MfConstraint,scr"  'hide Constraints
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+
+selection1.Search "CatPrtSearch.Surface,All"       'hide Surfaces
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+ 
+selection1.Search "CatPrtSearch.AxisSystem,All"    'hide Axis System
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+
+selection1.Search "CatPrtSearch.AxisSystem.Name=Axis' 'System*,All"
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+
+selection1.Search "CatPrtSearch.Line,All"           'hide lines
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+ 
+selection1.Search "CatPrtSearch.Curve,All"          'hide curves
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+
+selection1.Search "CatPrtSearch.Sketch,All"          'hide sketches
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+
+selection1.Search "CatPrtSearch.Point,All"           'hide points
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+
+selection1.Search "CatPrtSearch.Plane,All"           'hide planes
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+ 
+selection1.Search "CATGmoSearch.OpenBodyFeature,all"  'hide Geometrical Set
+Set visPropertySet1 = selection1.VisProperties
+visPropertySet1.SetShow 1
+selection1.Clear
+
+' ############################################
+
+Dim ActDoc As Document
+Set ActDoc = CATIA.ActiveDocument
+
+Dim camIsoView As Camera3D
+Set camIsoView = ActDoc.Cameras.Item("iso")
+
+Dim objIsoViewPoint As Viewpoint3D
+Set objIsoViewPoint = camIsoView.Viewpoint3D
+
+' set desired  viewpoint for active viewer
+
+Dim ActWin As Window
+Set ActWin = CATIA.ActiveWindow
+
+Dim ActViewer As Viewer3D
+Set ActViewer = ActWin.ActiveViewer
+
+  ActViewer.Viewpoint3D = objIsoViewPoint
+  
+ActViewer.Reframe
+CATIA.StartCommand ("Collapse all")
+
+' ###############################################
+
+Dim pdoc1 As PartDocument
+    Set pdoc1 = CATIA.ActiveDocument
+    
+        If Err.Number = 0 Then
+            MsgBox "The " & pdoc1.FullName & " is correctly updated and ready for the action!"
+               Dim part1 As Part
+               Set part1 = pdoc1.Part
+    
+                    part1.Update
+    
+        Else
+            MsgBox "Beware, Active document is not a Part Document!"
+        End If
+
+' ################################################
+
+
+End Sub
+
