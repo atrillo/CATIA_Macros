@@ -1,0 +1,40 @@
+Sub CATMain()
+
+' Creates a new Geometrical Set named "My Geometrical Set"
+Set hybridShapeFactory1=CATIA.ActiveDocument.Part.HybridShapeFactory
+Set hybridBody1 = CATIA.ActiveDocument.Part.HybridBodies.Add()
+hybridBody1.Name="My Geometrical Set"
+
+ReDim strArray(0)
+strArray(0) = "Point"
+
+Dim msg1 As String
+msg1 = "Select a point"
+
+Dim myPoint As String
+myPoint = CATIA.ActiveDocument.Selection.SelectElement2(strArray, msg1, False)
+If (msg1 = "UNDO") Or (msg1 = "Cancel") Then
+    MsgBox "You have chosen to Undo this operation."
+    Exit Sub
+End If
+
+Set myPoint1 = CATIA.ActiveDocument.Selection.Item(1).Value
+
+Set reference1=CATIA.ActiveDocument.Part.CreateReferenceFromObject(myPoint1)
+
+MsgBox "The Geometrical Set selected is : " & myPoint1.Name
+
+ReDim strArray(0)
+strArray(0)="Plane"
+myPlane = CATIA.ActiveDocument.Selection.SelectElement2(strArray, msg1, False) 
+   
+Set myPlane1 = CATIA.ActiveDocument.Selection.Item(1).Value
+
+Set reference2=CATIA.ActiveDocument.Part.CreateReferenceFromObject(myPlane1)
+
+Dim superPlane As HybridShapePlaneOffsetPt
+Set superPlane = hybridShapeFactory1.AddNewPlaneOffsetPt(reference1,reference2)
+
+hybridBody1.AppendHybridShape superPlane
+
+End Sub
