@@ -3,9 +3,14 @@ Option Explicit
 ' *****************************************************************************************
 ' Purpose:     This script creates a sketch containing N squares within a Part document (N: user defined)
 ' Assumptions: A Part document must be active.
-' Author: 		 Antonio Trillo Díaz (antonio.trillo.diaz@gmail.com)
-' Created:		 17/09/2014
+' Author:      Antonio Trillo Díaz (antonio.trillo.diaz@gmail.com)
+' Created:     17/09/2014
 ' Last updated:24/09/2014
+' *****************************************************************************************
+
+' *****************************************************************************************
+' Features to be included:
+' * Error handling if no Part Document is open.
 ' *****************************************************************************************
  
 Sub CATMain()
