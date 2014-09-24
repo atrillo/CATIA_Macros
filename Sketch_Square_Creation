@@ -1,8 +1,12 @@
 Option Explicit
 
-' CATIA Script created by Antonio Trillo Díaz. All copyrights belongs to their respective owners.
-' This script creates within a Part document a sketch containing N squares (user defined).
-' Created on 17/09/2014
+' *****************************************************************************************
+' Purpose:     This script creates a sketch containing N squares within a Part document (N: user defined)
+' Assumptions: A Part document must be active.
+' Author: 		 Antonio Trillo Díaz (antonio.trillo.diaz@gmail.com)
+' Created:		 17/09/2014
+' Last updated:24/09/2014
+' *****************************************************************************************
  
 Sub CATMain()
  
